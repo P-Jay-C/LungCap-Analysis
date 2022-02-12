@@ -1,0 +1,72 @@
+---
+title: "LungCap Data Analysis"
+output: html_notebook
+---
+
+```{r}
+library(readxl)
+```
+
+```{r}
+LungCap = read_excel("LungCap.xls")
+```
+
+```{r}
+LungCap
+```
+```{r}
+dim(LungCap)
+```
+```{r}
+names(LungCap)
+```
+
+
+```{r}
+summary(LungCap)
+```
+
+```{r}
+table(LungCap$Smoke)
+```
+```{r}
+table(LungCap$Gender)
+```
+```{r}
+table(LungCap$Caesarean)
+```
+```{r}
+prop.table(table(LungCap$Gender))
+```
+```{r}
+gender = (table(LungCap$Gender))
+```
+
+```{r}
+barplot(gender)
+```
+```{r}
+hist(LungCap$`LungCap(cc)`)
+```
+
+```{r}
+hist(LungCap$`LungCap(cc)`,ylim = c(0,0.2), col = 4, breaks = seq(from = 0, to = 16, by = 2),las = 1, labels = TRUE )
+lines(density(LungCap$`LungCap(cc)`), col = 2, lwd = 3)
+box()
+```
+```{r}
+library(ggplot2)
+```
+
+```{r}
+plot(x = LungCap$`Age( years)`, y=LungCap$`Height(inches)`, main = "Scatterplot", xlab = "Age", ylab = "Height", las = 1,xlim = c(3,20), ylim = c(40, 85), col = 2 , pch = 5)
+
+abline(lm(LungCap$`Height(inches)` ~ LungCap$`Age( years)`), col = 7)
+lines(smooth.spline(LungCap$`Age( years)`, LungCap$`Height(inches)`), lty = 2, col =1)
+```
+```{r}
+ggplot(data = LungCap, aes(x = LungCap$`LungCap(cc)`, y=LungCap$Gender)) + geom_boxplot()
+```
+
+
+
